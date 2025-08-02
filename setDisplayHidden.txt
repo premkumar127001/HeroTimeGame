@@ -1,0 +1,5 @@
+
+element.style.display = "none";
+
+// Optionally, you can clear flexDirection explicitly if needed
+element.style.flexDirection = "";

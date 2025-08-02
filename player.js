@@ -1,6 +1,8 @@
+import { tileTypes, isWalkable } from './tileTypes.js';
+import { showHouseUI } from './houseUI.js';
 
 
-class Player {
+export default class Player {
   constructor(x, y, tileSize, color = 'red', speed = 1) {
     this.x = x;
     this.y = y;
@@ -11,6 +13,7 @@ class Player {
     this.targetX = x;
     this.targetY = y;
     this.moving = false;
+    this.lastTileIndex = null;
   }
 
   update(keys, mapWidth, mapHeight, tileMap) {
@@ -53,6 +56,21 @@ class Player {
         this.y = this.targetY;
         this.moving = false;
       }
+      const tileX = Math.floor(this.x / this.width);
+      const tileY = Math.floor(this.y / this.height);
+      const tileIndex = tileMap[tileY]?.[tileX];
+
+      if (tileIndex !== this.lastTileIndex) {
+        const tile = tileTypes[tileIndex];
+
+        if (tile?.interactive && !this.uiOpen) {
+          console.log(`Entered ${tile.name} (index ${tileIndex})`);
+          showHouseUI(tile, this);
+        }
+
+        this.lastTileIndex = tileIndex;
+      }
+
     }
   }
 

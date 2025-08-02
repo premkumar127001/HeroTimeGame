@@ -1,4 +1,9 @@
-let scaleFactor = 4; // 2x zoom (you can try 1.5, 2.5, etc.)
+import Player from './player.js';
+import { closeHouseUI } from './houseUI.js';
+window.closeTileUI = () => closeHouseUI(player);
+
+
+let scaleFactor = 2; // 2x zoom (you can try 1.5, 2.5, etc.)
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.screen.width;
@@ -10,6 +15,7 @@ let tileMapLayers = [];
 const tilesetColumns = 6;
 
 const player = new Player(80, 96, tileSize);
+window.playerRef = player;
 let cameraX = 0;
 let cameraY = 0;
 const keys = {};
