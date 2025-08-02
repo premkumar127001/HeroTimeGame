@@ -1,4 +1,4 @@
-let scaleFactor = 8; // 2x zoom (you can try 1.5, 2.5, etc.)
+let scaleFactor = 4; // 2x zoom (you can try 1.5, 2.5, etc.)
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.screen.width;
@@ -9,7 +9,7 @@ let mapCols, mapRows;
 let tileMapLayers = [];
 const tilesetColumns = 6;
 
-const player = new Player(0, 0, tileSize);
+const player = new Player(80, 96, tileSize);
 let cameraX = 0;
 let cameraY = 0;
 const keys = {};
@@ -60,11 +60,13 @@ function update() {
   const mapHeight = tileMapLayers[0].length * tileSize;
   player.update(keys, mapWidth, mapHeight);
 
-  cameraX = player.x + player.width / 2 - canvas.width / 2;
-  cameraY = player.y + player.height / 2 - canvas.height / 2;
+  cameraX = player.x + player.width / 2 - (canvas.width / scaleFactor) / 2;
+  cameraY = player.y + player.height / 2 - (canvas.height / scaleFactor) / 2;
 
-  const maxCamX = mapWidth - canvas.width;
-  const maxCamY = mapHeight - canvas.height;
+
+  const maxCamX = mapWidth - canvas.width / scaleFactor;
+  const maxCamY = mapHeight - canvas.height / scaleFactor;
+
   cameraX = Math.max(0, Math.min(cameraX, maxCamX));
   cameraY = Math.max(0, Math.min(cameraY, maxCamY));
 }
