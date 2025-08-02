@@ -58,7 +58,8 @@ fetch('Assets/newMap.tmj')
 function update() {
   const mapWidth = tileMapLayers[0][0].length * tileSize;
   const mapHeight = tileMapLayers[0].length * tileSize;
-  player.update(keys, mapWidth, mapHeight);
+  player.update(keys, mapWidth, mapHeight, tileMapLayers[0]);
+
 
   cameraX = player.x + player.width / 2 - (canvas.width / scaleFactor) / 2;
   cameraY = player.y + player.height / 2 - (canvas.height / scaleFactor) / 2;

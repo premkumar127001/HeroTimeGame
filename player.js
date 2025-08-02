@@ -1,3 +1,5 @@
+
+
 class Player {
   constructor(x, y, tileSize, color = 'red', speed = 1) {
     this.x = x;
@@ -11,24 +13,34 @@ class Player {
     this.moving = false;
   }
 
-  update(keys, mapWidth, mapHeight) {
+  update(keys, mapWidth, mapHeight, tileMap) {
+    const nextX = this.x;
+    const nextY = this.y;
+    let intendedX = this.x;
+    let intendedY = this.y;
+
     if (!this.moving) {
       if (keys.ArrowUp && this.y - this.height >= 0) {
-        this.targetY = this.y - this.height;
-        this.moving = true;
+        intendedY = this.y - this.height;
       } else if (keys.ArrowDown && this.y + this.height < mapHeight) {
-        this.targetY = this.y + this.height;
-        this.moving = true;
+        intendedY = this.y + this.height;
       } else if (keys.ArrowLeft && this.x - this.width >= 0) {
-        this.targetX = this.x - this.width;
-        this.moving = true;
+        intendedX = this.x - this.width;
       } else if (keys.ArrowRight && this.x + this.width < mapWidth) {
-        this.targetX = this.x + this.width;
+        intendedX = this.x + this.width;
+      }
+
+      const tileX = Math.floor(intendedX / this.width);
+      const tileY = Math.floor(intendedY / this.height);
+      const tileIndex = tileMap[tileY]?.[tileX];
+
+      if (isWalkable(tileIndex)) {
+        this.targetX = intendedX;
+        this.targetY = intendedY;
         this.moving = true;
       }
     }
 
-    // Move towards target
     if (this.moving) {
       const dx = this.targetX - this.x;
       const dy = this.targetY - this.y;
@@ -36,7 +48,6 @@ class Player {
       if (Math.abs(dx) > 0) this.x += this.speed * Math.sign(dx);
       if (Math.abs(dy) > 0) this.y += this.speed * Math.sign(dy);
 
-      // Snap when close
       if (Math.abs(dx) <= this.speed && Math.abs(dy) <= this.speed) {
         this.x = this.targetX;
         this.y = this.targetY;
