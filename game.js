@@ -1,5 +1,5 @@
 import Player from './player.js';
-import { closeHouseUI } from './houseUI.js';
+import { closeHouseUI, showHouseUI } from './houseUI.js';
 window.closeTileUI = () => closeHouseUI(player);
 
 
