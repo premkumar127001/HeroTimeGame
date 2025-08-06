@@ -3,41 +3,40 @@ export const items = {
     name: 'Torch',
     image: './Assets/torch.png'
   },
-  map: {
-    name: 'Treasure Map',
-    image: './Assets/torch.png'
+  timeMachine: {
+    name: 'Time Machine',
+    image: './Assets/time-machine.png'
   },
-  potion: {
-    name: 'Potion',
-    image: './Assets/torch.png'
+  timeBomb: {
+    name: 'Time Bomb',
+    image: './Assets/time-bomb.png'
   },
-  map: {
-    name: 'Treasure Map',
-    image: './Assets/torch.png'
+  axe:{
+    name: 'Axe',
+    image: './Assets/axe.png'
   },
-  wood: {
-    name: 'Wood',
-    image: './Assets/torch.png'
+  crown:{
+    name: 'Crown',
+    image: './Assets/crown.png'
   },
-  pipe: {
-    name: 'Pipe',
-    image: './Assets/torch.png'
-  },
-  food: {
-    name: 'Food',
-    image: './Assets/torch.png'
+  key:{
+    name: 'Key',
+    image: './Assets/key.png'
   }
 };
 
 
 // Optional helper
-export function getRandomItems(count=2) {
+export function getRandomItems(count = 1) {
   const keys = Object.keys(items);
+  const max = Math.min(count, keys.length);  // avoid overflow
   const result = [];
-  while (result.length < count) {
+
+  while (result.length < max) {
     const rand = keys[Math.floor(Math.random() * keys.length)];
     if (!result.includes(rand)) result.push(rand);
   }
   return result;
 }
+
 

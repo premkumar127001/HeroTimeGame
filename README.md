@@ -67,3 +67,6 @@ This is a personal learning project. Contributions, feedback, and forks are welc
 
 Created by someone passionate about learning development by building real projects 🎯
 
+## Attributions
+
+- [Torch icons](https://www.flaticon.com/free-icons/torch) created by Freepik - Flaticon

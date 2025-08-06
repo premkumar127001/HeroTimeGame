@@ -8,7 +8,7 @@ export const tileTypes = {
     name: 'house',
     walkable: true,
     interactive: true,
-    getItems: () => getRandomItems(5)
+    getItems: () => getRandomItems()
   }
 };
 
