@@ -1,0 +1,72 @@
+
+
+
+# ================================
+# Node / Backend
+# ================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json 
+server/inventory.json
+server/player.json
+# OPTIONAL: keep if you want reproducible installs
+
+# Environment variables & secrets
+.env
+*.env
+*.key
+*.pem
+*.crt
+*.cert
+*.pfx
+
+# Logs
+logs/
+*.log
+logs/*.log
+
+# Process IDs
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage
+coverage/
+
+# ================================
+# Frontend / Build Artifacts
+# ================================
+dist/
+build/
+.cache/
+.tmp/
+
+# ================================
+# OS-specific junk
+# ================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.Trash-*
+
+# ================================
+# IDE / Editor
+# ================================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+
