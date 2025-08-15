@@ -1,5 +1,6 @@
 import { tileTypes, isWalkable } from './tileTypes.js';
 import { showHouseUI } from './houseUI.js';
+import { GameStates, setGameState } from './gameState.js';
 
 
 export default class Player {
@@ -66,6 +67,7 @@ export default class Player {
         if (tile?.interactive && !this.uiOpen) {
           console.log(`Entered ${tile.name} (index ${tileIndex})`);
           showHouseUI(tile, this);
+          setGameState(GameStates.IN_HOUSE);
         }
 
         this.lastTileIndex = tileIndex;

@@ -1,27 +1,27 @@
 export const items = {
   torch: {
     name: 'Torch',
-    image: './Assets/torch.png'
+    image: './Assets/Items/torch.png'
   },
   timeMachine: {
     name: 'Time Machine',
-    image: './Assets/time-machine.png'
+    image: './Assets/Items/time-machine.png'
   },
   timeBomb: {
     name: 'Time Bomb',
-    image: './Assets/time-bomb.png'
+    image: './Assets/Items/time-bomb.png'
   },
   axe:{
     name: 'Axe',
-    image: './Assets/axe.png'
+    image: './Assets/Items/axe.png'
   },
   crown:{
     name: 'Crown',
-    image: './Assets/crown.png'
+    image: './Assets/Items/crown.png'
   },
   key:{
     name: 'Key',
-    image: './Assets/key.png'
+    image: './Assets/Items/key.png'
   }
 };
 

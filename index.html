@@ -6,12 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HeroTimeGame</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             padding: 0;
             overflow: hidden;
             background: #222;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
         }
 
         canvas {
@@ -54,19 +57,120 @@
             padding: 4px;
         }
 
-        .item-cell img{
+        .item-cell img {
             background-color: white;
         }
 
-        .item-cell p{
+        .item-cell p {
             background-color: white;
             width: 100%;
             padding: 10px 0px;
         }
 
         .item-cell.selected img,
-        .item-cell.selected p{
+        .item-cell.selected p {
             background-color: yellow;
+        }
+
+        /* Main container */
+        /* #mainMenuContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #e6f0ff, #b3d1ff);
+            color: #333;
+            height: 100vh;
+            overflow: hidden;
+        } */
+
+        #mainMenuContainer {
+            background: linear-gradient(135deg, #e6f0ff, #b3d1ff);
+            color: #333;
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+
+        /* Main menu box */
+        .mainMenu {
+            background-color: #ffffff;
+            border: 2px solid #a3c9f5;
+            color: #222;
+            border-radius: 12px;
+            padding: 30px 40px;
+            width: 360px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Game title */
+        .mainMenu h2 {
+            font-family: 'Creepster', cursive;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #3366cc;
+            text-shadow: none;
+        }
+
+        /* Buttons */
+        .mainMenu button {
+            width: 70%;
+            padding: 12px;
+            font-size: 1.2rem;
+            background-color: #444;
+            border: none;
+            border-radius: 6px;
+            background-color: #dbe9ff;
+            color: #222;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mainMenu button:hover {
+            background-color: #aacbff;
+            transform: scale(1.05);
+        }
+
+        /* Volume Control */
+        .volumeContainer {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #dbe9ff;
+            /* padding: 10px 12px; */
+            border-radius: 8px;
+            width: 70%;
+            justify-content: center;
+        }
+
+        .volumeContainer button {
+            padding: 6px 12px;
+            font-size: 18px;
+            background-color: #dbe9ff;
+            color: #222;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .volumeContainer button:hover {
+            background-color: #aacbff;
+            transform: scale(1.1);
+        }
+
+        #volumeLabel {
+            font-size: 1rem;
+            min-width: 50px;
+            text-align: center;
+            color: #222;
         }
     </style>
 </head>
@@ -83,9 +187,83 @@
         </div>
     </div>
 
+    <!-- In‑Game Main Menu Overlay -->
+    <div id="mainMenuContainer">
+        <div class="mainMenu">
+            <h2 class="HTG_Heading">Hero Time Game</h2>
+            <button id="newGameBtn">New Game</button>
+            <button id="loadGameBtn">Load Saved Game</button>
+
+            <div class="volumeContainer">
+                <button id="volumeDownBtn">🔉</button>
+                <span id="volumeLabel">50%</span>
+                <button id="volumeUpBtn">🔊</button>
+            </div>
+
+            <button id="settingBtn">Setting</button>
+            <button id="exitBtn">Exit</button>
+        </div>
+    </div>
+
+
     <canvas id="gameCanvas"></canvas>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+    <script type="module" src="./gameState.js"></script>
+    <script type="module" src="./menuApi.js"></script>
+    <script type="module" src="./houseUI.js"></script>
+    <script type="module" src="./inputManager.js"></script>
     <script type="module" src="./game.js"></script>
+    <script type="module">
+        import { GameStates, currentState, setGameState } from './gameState.js';
+        let menuOpen = false;
+        // setGameState(GameStates.MENU);
+        let volume = Number(localStorage.getItem('volume') ?? 1);
+
+        // Get the parent container
+
+        const mainMenuUI = document.getElementById('mainMenuContainer');
+        const newGameBtn = document.getElementById('newGameBtn');
+        const loadGameBtn = document.getElementById('loadGameBtn');
+        const settingBtn = document.getElementById('settingBtn');
+        const exitBtn = document.getElementById('exitBtn');
+        const volumeDownBtn = document.getElementById('volumeDownBtn');
+        const volumeUpBtn = document.getElementById('volumeUpBtn');
+        const volumeLabel = document.getElementById('volumeLabel');
+
+        updateVolumeLabel();
+
+        // buttons
+        newGameBtn.addEventListener('click', async () => {
+            window.location.href = 'index.html?mode=newGame';
+        });
+
+        loadGameBtn.addEventListener('click', async () => {
+            window.location.href = 'index.html?mode=loadGame';
+        });
+
+        settingBtn.addEventListener('click', async () => {
+            alert('Setting Button Pressed');
+        });
+
+        exitBtn.addEventListener('click', async () => {
+            alert('Exit Button Pressed');
+        });
+
+        volumeDownBtn.addEventListener('click', () => setVolume(Math.max(0, volume - 0.1)));
+        volumeUpBtn.addEventListener('click', () => setVolume(Math.min(1, volume + 0.1)));
+
+        function setVolume(v) {
+            volume = Math.round(v * 100) / 100;
+            localStorage.setItem('volume', volume);
+            updateVolumeLabel();
+        }
+
+        function updateVolumeLabel() {
+            volumeLabel.textContent = `${Math.round(volume * 100)}%`;
+        }
+    </script>
+
 </body>
 
 </html>

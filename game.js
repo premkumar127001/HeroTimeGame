@@ -1,8 +1,23 @@
+import { GameStates, setGameState, isPaused } from './gameState.js';
 import Player from './player.js';
 import { closeHouseUI, showHouseUI } from './houseUI.js';
+
+
+
+const params = new URLSearchParams(window.location.search);
+const mode = params.get('mode'); // 'new' or 'load'
+
+if (mode === 'newGame') {
+  console.log('🟢 Starting new game...');
+} else if (mode === 'loadGame') {
+  console.log('🔄 Loading saved game...');
+  document.getElementById('mainMenuContainer').style.display = 'none';
+  setGameState(GameStates.PLAYING);
+}
+
+
+
 window.closeTileUI = () => closeHouseUI(player);
-
-
 let scaleFactor = 2; // 2x zoom (you can try 1.5, 2.5, etc.)
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
